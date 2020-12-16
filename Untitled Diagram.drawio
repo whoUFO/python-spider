@@ -1,1 +1,46 @@
-<mxfile host="app.diagrams.net" modified="2020-12-16T07:34:12.808Z" agent="5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36" etag="m2f53huB6SV7v7Lg7PhJ" version="14.0.3" type="github"><diagram id="5sWGfUQDNzh1LS6Xpi2J" name="Page-1">ddHBEoIgEADQr+Gu0JidzerSyUNnRjZhBl0GabS+Ph0wY6wLszwWlgXCinY8W27kFQVoQhMxEnYklOZZPo0zPD3sMuahsUp4Sleo1AsCJkEfSkAfJTpE7ZSJscaug9pFxq3FIU67o46rGt7ABqqa663elHAytEX3q19ANXKpnGYHv9LyJTl00ksucPgiVhJWWETno3YsQM9vt7yL33f6s/q5mIXO/dgwBevZ0yT6IFa+AQ==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-12-16T07:41:09.906Z" agent="5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36" etag="Kfg2eFkT6h_-vzZzqDnk" version="14.0.3" type="github">
+  <diagram id="5sWGfUQDNzh1LS6Xpi2J" name="Page-1">
+    <mxGraphModel dx="868" dy="463" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-1" value="电科院项目立项" style="swimlane;html=1;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;" vertex="1" parent="1">
+          <mxGeometry x="54" y="70" width="600" height="610" as="geometry">
+            <mxRectangle x="54" y="30" width="120" height="20" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-2" value="院会议" style="swimlane;html=1;startSize=20;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-1">
+          <mxGeometry y="20" width="120" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-3" value="科信部" style="swimlane;html=1;startSize=20;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-1">
+          <mxGeometry x="120" y="20" width="120" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-6" value="发布指南" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-3">
+          <mxGeometry x="10" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-7" value="" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-3">
+          <mxGeometry x="20" y="110" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-4" value="财务产权部" style="swimlane;html=1;startSize=20;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-1">
+          <mxGeometry x="240" y="20" width="120" height="590" as="geometry">
+            <mxRectangle x="240" y="20" width="30" height="570" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-24" value="财务产权部" style="swimlane;html=1;startSize=20;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-1">
+          <mxGeometry x="360" y="20" width="120" height="590" as="geometry">
+            <mxRectangle x="240" y="20" width="30" height="570" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-25" value="科信部" style="swimlane;html=1;startSize=20;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-1">
+          <mxGeometry x="480" y="20" width="120" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-26" value="发布指南" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-25">
+          <mxGeometry x="10" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Ojrs1QHKOC8dCMAqbBuq-27" value="" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="Ojrs1QHKOC8dCMAqbBuq-25">
+          <mxGeometry x="20" y="110" width="100" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
