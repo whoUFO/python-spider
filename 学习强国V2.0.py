@@ -24,9 +24,15 @@ LOGIN_LINK = 'https://pc.xuexi.cn/points/login.html'
 ARTICLES_LINK = 'https://www.xuexi.cn/d05cad69216e688d304bb91ef3aac4c6/9a3668c13f6e303932b5e0e100fc248b.html'
 
 
+class DatiError(RuntimeError):
+    def __init__(self, arg):
+        self.args = arg
+
+
 def save_cookie(browser):
     cookies = browser.get_cookies()
-    print("开始保存cookie! ", cookies)
+    # print("开始保存cookie! ", cookies)
+    print("开始保存cookie! ")
     pkCookies = pickle.dumps(cookies)
     with open('xuexi.cookie', 'wb+') as f:
         f.write(pkCookies)
@@ -37,15 +43,16 @@ def save_cookie(browser):
 def read_cookie(browser):
     with open('xuexi.cookie', 'rb') as f:
         pkCookies = pickle.load(f)
-        print("开始读取cookie! ", pkCookies)
+        # print("开始读取cookie! ", pkCookies)
+        print("开始读取cookie! ")
         for item in pkCookies:
             if ('expiry' in item) and (item['expiry'] != (int(item['expiry']))):
-                print("修改前：", item)
+                # print("修改前：", item)
                 item['expiry'] = int(item['expiry'])  # 学习强国返回的expiry有小数，去掉
-                print("修改后：", item)
+                # print("修改后：", item)
                 browser.add_cookie(item)
             else:
-                print("未修改：", item)
+                # print("未修改：", item)
                 browser.add_cookie(item)
     return True
 
@@ -123,7 +130,7 @@ def watch_videos(driver):
 
         all_handles = driver.window_handles
         driver.switch_to.window(all_handles[-1])
-        # driver.get(driver.current_url)
+
         time.sleep(5)
         video_duration_str = driver.find_element_by_xpath(
             "//span[@class='duration']").get_attribute('innerText')
@@ -136,9 +143,12 @@ def watch_videos(driver):
             watched += 1
             time.sleep(video_duration + 3)
             spend_time += video_duration + 3
+        else:
+            print("视频时长少于70秒，跳过。")
+        print("已观看{}个视频".format(watched))
         driver.close()
-        driver.switch_to_window(all_handles[0])
-        if watched > 1:
+        driver.switch_to.window(all_handles[0])
+        if watched > 7:
             print("视频观看结束!")
             break
     return True
@@ -146,12 +156,22 @@ def watch_videos(driver):
 
 def DaTi(driver):
     retry = False
+    # 如果查找失败，表示进入答题完成页面。
     try:
         time.sleep(1)  # 等待一秒，其实也无所谓，但是为防止过快操作造成电脑卡顿，还是等待一秒。
-        elem_juje = WebDriverWait(driver, 100).until(
+        elem_juje = WebDriverWait(driver, 60).until(
             EC.presence_of_element_located(
                 (By.XPATH, '//div[@class="q-header"]')))
+    except:
+        elem_juje = WebDriverWait(driver, 60).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//button/span')))
+        if elem_juje:
+            return True
+        else:
+            return False
 
+    try:
         juje = elem_juje.get_attribute('innerText')
 
         # 在每日答题中，有三类题，判断题、选择题、填空题，所以先获取题的类别
@@ -226,14 +246,11 @@ def DaTi(driver):
 
             time.sleep(0.5)
             if '请观看视频' in elem_answer.get_attribute('innerText'):
-                print("需要观看视频\n")
+                # 在填空题中会有观看视频的题目，而且查看提示中会写‘请观看视频’而不会直接给出答案，所以要人工选择
+                print("需要观看视频,不直接给出答案，要人工选择，拒绝做题")
                 retry = True
-                raise "拒绝做题"
-                elem_next = WebDriverWait(driver, 100).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, '//div[@class="action-row"]/button')))
-                elem_next.click()
-            # 在填空题中会有观看视频的题目，而且查看提示中会写‘请观看视频’而不会直接给出答案，所以要人工选择
+                raise DatiError("拒绝做题")
+
             elem_answer = WebDriverWait(driver, 100).until(
                 EC.presence_of_all_elements_located(
                     (By.XPATH,
@@ -263,33 +280,46 @@ def DaTi(driver):
             retry = False
             DaTi(driver)
         elif '判' in juje:  # 同上，判断题不会直接给出答案，所以只能手动吧
-            print("拒绝做判断题")
+            print("判断题无提示，无法自动完成，拒绝做判断题")
             retry = True
-            raise "拒绝做题"
-            elem_next = WebDriverWait(driver, 100).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, '//div[@class="action-row"]/button')))
-            elem_next.click()
-            retry = False
-            DaTi(driver)
-    except:
+            raise DatiError("拒绝做题")
+
+    except DatiError as e:
+        print(e.args)
         if retry:
+            driver.execute_script("window.onbeforeunload = function() {};")
+
             driver.get(url='https://pc.xuexi.cn/points/exam-practice.html')
             DaTi(driver)
-    print("答题结束")
+
     return True
+
 
 def main():
     executable_path = "C:\Program Files\Google\Chrome\Application\chromedriver.exe"
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
-    driver = webdriver.Chrome(
-        executable_path=executable_path, options=options)
-    login_simulation(driver)
-    read_articles(driver)
+    times = 0
+    while True:
+        driver = webdriver.Chrome(
+            executable_path=executable_path, options=options)
+        login_simulation(driver)
+
+        # 开始答题
+        print("开始答题！")
+        driver.get(url='https://pc.xuexi.cn/points/exam-practice.html')
+        if DaTi(driver) == True:
+            break
+        times += 1
+        if times > 3:
+            break
+        driver.quit()
+
     watch_videos(driver)
-    driver.get(url='https://pc.xuexi.cn/points/exam-practice.html')
-    DaTi(driver)
+    read_articles(driver)
+    print("学习完毕！")
+    driver.quit()
+
 
 if __name__ == '__main__':
-	main()
+    main()
